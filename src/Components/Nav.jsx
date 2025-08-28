@@ -32,6 +32,7 @@ const Nav = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div
           className="collapse navbar-collapse justify-content-center"
           id="navbarText"
@@ -60,7 +61,7 @@ const Nav = () => {
               </a>
             </li>
           </ul>
-          </div>
+          
           <div className="flex items-center space-x-4">
         <input 
         type="text"
@@ -98,6 +99,7 @@ const Nav = () => {
                 transform: "translate(-40%, -30%)"}}>{wishlist.length}</span>
           </i>
         </Link>
+      </div>
       </div>
     </nav>
   );

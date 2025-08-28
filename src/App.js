@@ -12,7 +12,7 @@ import Cart from "./pages/Cart";
 import { useState, useEffect } from "react";
 import useFetch from "./Components/useFetch";
 import UserLogin from "./pages/userLogin";
-import UserRegisterForm from "./pages/userRegister";
+import UserRegisterForm from "./pages/newUser";
 import UserInfo from "./pages/userINfo";
 import AddressManagement from "./pages/AddressBook";
 import WishlistManagement from "./pages/wishlist";

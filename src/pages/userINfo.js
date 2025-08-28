@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const UserInfo = () => {
   const [user, setUser] = useState(null);
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState([]);
 
   useEffect(() => {
     // Retrieve the stored user data from localStorage
@@ -58,7 +58,9 @@ const UserInfo = () => {
 
           <h5 className="my-2 text-success">Address Book</h5>
           <div className="row">
-            {address.map((addr, index) => (
+
+          {address && address.length > 0 ? (
+            address.map((addr, index) => (
               <div
                 className="col-md-5 mx-4 card my-3"
                 style={{ width: "18rem" }}
@@ -78,8 +80,13 @@ const UserInfo = () => {
                   </Link>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+             <p className="container">No Address found</p>
+          )}
+
           </div>
+
         </div>
       </div>
     </>

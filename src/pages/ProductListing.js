@@ -110,13 +110,14 @@ const ProductListing = () => {
               categoryData.map((cat) => (
                 <div key={cat._id}>
                   <input
-                    className="form-check-input"
+                    className="form-check-input mx-3 py-2"
                     type="checkbox"
                     //id={`cat-${cat._id}`}
                     value={cat.name}
                     checked={checkBox.includes(cat.name)}
                     onChange={handleCheckboxes}
                   />
+
                   <label>{cat.name}</label>
                 </div>
               ))}
@@ -170,6 +171,7 @@ const ProductListing = () => {
                         src={product.image}
                         className="card-img-top"
                         alt="..."
+                         style={{ width: "282px", height: "250px" }}
                       />
                     </Link>
 
