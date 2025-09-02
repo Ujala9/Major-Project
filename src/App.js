@@ -14,7 +14,7 @@ import useFetch from "./Components/useFetch";
 import UserLogin from "./pages/userLogin";
 import UserRegisterForm from "./pages/newUser";
 import UserInfo from "./pages/userINfo";
-import AddressManagement from "./pages/AddressBook";
+import AddressPage from "./pages/AddressBook";
 import WishlistManagement from "./pages/wishlist";
 
 import { ToastContainer,toast } from "react-toastify";
@@ -64,11 +64,15 @@ export default function App() {
   
   const wishlistHandler = (productId) => {
     setWishlist(
-      (prevWishlist) =>
-        prevWishlist.includes(productId)
-          ? prevWishlist.filter((id) => id !== productId) // remove
-          : [...prevWishlist, productId] // add
-    );
+      (prevWishlist) =>{
+        if (prevWishlist.includes(productId)) {
+        toast.error("Removed from Wishlist", { toastId: "wishlist-remove" });
+        return prevWishlist.filter((id) => id !== productId);
+      } else {
+        toast.success("Added to Wishlist", { toastId: "wishlist-add" });
+        return [...prevWishlist, productId];
+      }
+    });
   };
 
   //Remove from Whishlist
@@ -82,7 +86,7 @@ export default function App() {
   
 
 
-  if (productLoading) return <p>Loading...</p>;
+  if (productLoading) return <p className="m-4">Loading...</p>;
   if (productError) return <p>Something went wrong!</p>;
   if (!ProductData) return null; // or some fallback UI
 
@@ -145,17 +149,30 @@ export default function App() {
 
   // Decrease quantity
   const decreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.product._id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-    toast.warning("Quantity Decreased", {
-      style: {background: "dark"}
+  let message = "";
+
+  setCart((prevCart) =>
+    prevCart.flatMap((item) => {
+      if (item.product._id === productId) {
+        if (item.quantity > 1) {
+          message = "Quantity Decreased";
+          return { ...item, quantity: item.quantity - 1 };
+        } else {
+          message = "Product Removed from Cart";
+          return []; // remove item
+        }
+      }
+      return item;
     })
-  };
+  );
+
+  if (message) {
+    toast.warning(message, {
+      style: { background: "dark" }
+    });
+  }
+};
+
 
   
 
@@ -185,7 +202,7 @@ export default function App() {
           <Route path="/profile" element={<UserLogin />} />
           <Route path="/register" element={<UserRegisterForm />} />
           <Route path="/userInfo" element={<UserInfo />} />
-          <Route path="/address" element={<AddressManagement />} />
+          <Route path="/address" element={<AddressPage/>} />
           <Route path="/wishlist" element={<WishlistManagement />} />
 
         </Routes>

@@ -1,23 +1,15 @@
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import ElectroContext from "../Context/ElectroContext";
 import { Link } from "react-router-dom";
 
 const WishlistManagement = () => {
-  const { ProductData, addToCart, wishlistHandler, removeFromWishlist } = useContext(ElectroContext);
+  const { ProductData, addToCart, wishlist, wishlistHandler, removeFromWishlist } = useContext(ElectroContext);
 
-  const [wishlistIds, setWishlistIds] = useState([]);
-
-  // Load wishlist IDs from localStorage
-  useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    setWishlistIds(storedWishlist);
-  }, []);
-
-  // Filter products by wishlist IDs
-  const wishlistProducts = ProductData.filter((product) =>
-    wishlistIds.includes(product._id)
+ const wishlistProducts = ProductData.filter((product) =>
+    wishlist.includes(product._id)
   );
+
 
   if (wishlistProducts.length === 0) {
     return <h3 className="text-center my-4">Your wishlist is empty</h3>;
@@ -55,7 +47,6 @@ const WishlistManagement = () => {
                 onClick={() => { 
                     addToCart(product)
                     removeFromWishlist(product._id)
-                    setWishlistIds((prev) => prev.filter((id) => id !== product._id))
                 }}
                
               >

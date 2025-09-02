@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+const navigate = useNavigate();
 
 const AddressPage = () => {
   const [addresses, setAddresses] = useState([]);
@@ -19,39 +19,19 @@ const AddressPage = () => {
   };
 
   // Handle form submit
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const updated = [...addresses, formData];
-  //   setAddresses(updated);
-  //   localStorage.setItem("addressList", JSON.stringify(updated));
-  //   setFormData({
-  //     name: "",
-  //     phone: "",
-  //     street: "",
-  //     country: "",
-  //     state: "",
-  //     city: "",
-  //   });
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     let updated;
     if (editIndex !== null) {
-      // Editing an existing address
-      updated = addresses.map((addr, index) =>
-        index === editIndex ? formData : addr
-      );
+      updated = addresses.map((addr, i) => (i === editIndex ? formData : addr));
       setEditIndex(null);
     } else {
-      // Adding new address
       updated = [...addresses, formData];
     }
     setAddresses(updated);
     localStorage.setItem("addressList", JSON.stringify(updated));
 
-    // Reset form
     setFormData({
       name: "",
       phone: "",
@@ -62,151 +42,156 @@ const AddressPage = () => {
     });
   };
 
+  // Handle edit
+  const handleEdit = (index) => {
+    setFormData(addresses[index]);
+    setEditIndex(index);
+  };
 
-
-// Handle edit button click
-const handleEdit = (index) => {
-  setFormData(addresses[index]);
-  setEditIndex(index);
-};
-
-  useEffect(() => {
-    const storedAddress = localStorage.getItem("addressList");
-
-    if (storedAddress) {
-      setAddresses(JSON.parse(storedAddress));
-    }
-  }, []);
-
+  // Handle delete
   const handleDelete = (index) => {
     const updated = addresses.filter((_, i) => i !== index);
     setAddresses(updated);
     localStorage.setItem("addressList", JSON.stringify(updated));
   };
 
-  // console.log(addresses)
+  // Load stored addresses
+  useEffect(() => {
+    const stored = localStorage.getItem("addressList");
+    if (stored) setAddresses(JSON.parse(stored));
+  }, []);
+
+  const handleCheckout = () => {
+    if (selectedAddress === null) {
+      alert("Please select an address first!");
+      return;
+    }
+    const chosenAddress = addresses[selectedAddress];
+    localStorage.setItem("chosenAddress", JSON.stringify(chosenAddress));
+    navigate("/order-summary");
+  };
+
 
   return (
     <div className="container mt-4">
-      <h2>Add New Address</h2>
+      <h2>{editIndex !== null ? "Edit Address" : "Add New Address"}</h2>
 
-      <div className="row">
-        <div className="col">
-          <h5 className="text-info">CONTACT INFORMATION</h5>
-          <form onSubmit={handleSubmit} className="mb-4">
-            <div className="mb-3">
-              <label className="form-label">Full Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="Enter your name"
-                required
-              />
-            </div>
+      {/* One Form for All Inputs */}
+      <form onSubmit={handleSubmit} className="row">
+        <div className="col-md-6">
+          <h5 className="text-info">Contact Information</h5>
+          <div className="mb-3">
+            <label className="form-label">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
 
-            <div className="mb-3">
-              <label className="form-label">Phone Number</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="Enter your phone"
-                required
-              />
-            </div>
-          </form>
+          <div className="mb-3">
+            <label className="form-label">Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
         </div>
 
-        {/* Address Form */}
-        <div className="col">
-          <h5 className="text-info">ADDRESS</h5>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Street Address</label>
-              <input
-                name="street"
-                value={formData.street}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
+        <div className="col-md-6">
+          <h5 className="text-info">Address</h5>
+          <div className="mb-3">
+            <label className="form-label">Street</label>
+            <input
+              name="street"
+              value={formData.street}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
 
-            <div className="mb-3">
-              <label className="form-label">Country</label>
-              <input
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
+          <div className="mb-3">
+            <label className="form-label">Country</label>
+            <input
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
 
-            <div className="mb-3">
-              <label className="form-label">State</label>
-              <input
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
+          <div className="mb-3">
+            <label className="form-label">State</label>
+            <input
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
 
-            <div className="mb-3">
-              <label className="form-label">City</label>
-              <input
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
+          <div className="mb-3">
+            <label className="form-label">City</label>
+            <input
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
 
-            <button type="submit" className="btn btn-success">
-              {editIndex !== null ? "Update Address" : "Add Address"}
-            </button>
-          </form>
+          <button type="submit" className="btn btn-success">
+            {editIndex !== null ? "Update Address" : "Add Address"}
+          </button>
         </div>
-      </div>
+      </form>
 
       <h4 className="mt-4">Saved Addresses</h4>
-    
-        <h5 className="text-info">Address</h5>
-        <div className="row">
+      <div className="row">
         {addresses.map((addr, index) => (
-          <div className="col-md-5 mx-4 card my-3" style={{ width: "18rem" }}>
+          <div key={index} className="col-md-5 mx-4 card my-3">
             <div className="card-body">
               <h5 className="card-title">{addr.name}</h5>
               <h6 className="card-subtitle mb-2 text-body-secondary">
                 {addr.phone}
               </h6>
-              <span className="card-text">{addr.street},</span>
-              <span className="card-text">{addr.city},</span>
-              <p className="card-text">{addr.state}</p>
-              <p className="card-text">{addr.country}</p>
-              <Link  className="card-link" onClick={() => handleEdit(index)}>
+              <p className="card-text">
+                {addr.street}, {addr.city}, {addr.state}, {addr.country}
+              </p>
+              <button
+                className="btn btn-sm btn-link"
+                onClick={() => handleEdit(index)}
+              >
                 Edit
-              </Link>
-              <Link
-                className="card-link text-danger"
+              </button>
+              <button
+                className="btn btn-sm btn-link text-danger"
                 onClick={() => handleDelete(index)}
               >
                 Remove
-              </Link>
+              </button>
             </div>
           </div>
         ))}
-        </div>
+      </div>
+      {addresses.length > 0 && (
+        <button className="btn btn-success mt-3" onClick={handleCheckout}>
+          Proceed to Checkout
+        </button>
+      )}
     </div>
   );
 };
 
-export default AddressPage
+export default AddressPage;

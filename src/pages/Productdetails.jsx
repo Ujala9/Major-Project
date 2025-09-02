@@ -13,7 +13,7 @@ const ProductDetails = () => {
     "https://e-commerce-products-zeta.vercel.app/"
   );
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="container my-5 fs-4 text-center">Loading...</p>;
   if (error) return <p>Something went wrong.</p>;
 
 
@@ -23,7 +23,7 @@ const ProductDetails = () => {
   if (!product) return <p>Product not found.</p>;
 
   return (
-    <div className="row">
+    <div className="row m-4">
       <div className="col my-3">
         <div className="position-relative">
           <i

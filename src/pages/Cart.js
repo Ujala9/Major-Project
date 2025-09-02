@@ -1,5 +1,6 @@
 import { useEffect,useContext, useMemo } from "react";
 import ElectroContext from "../Context/ElectroContext";
+import { Link } from "react-router-dom"
 
 const Cart = () => {
   const { cart,removeFromCart, increaseQuantity,decreaseQuantity, moveToWishlist} = useContext(ElectroContext);
@@ -41,18 +42,18 @@ const Cart = () => {
 
                       <div className="d-flex align-items-center mb-2">
                         <span className="me-2">Quantity:</span>
-                        <button className="btn rounded btn-outline-danger btn-sm mx-1"
+                        <button className="btn rounded btn-outline-danger btn-sm m-2"
                         onClick={() => decreaseQuantity(product.product._id)}>
                           -
                         </button>
                         <span>{product.quantity}</span>
-                        <button className="btn rounded btn-outline-info btn-sm mx-1"
+                        <button className="btn rounded btn-outline-info btn-sm m-2"
                         onClick={() => increaseQuantity(product.product._id)}>
                           +
                         </button>
                       </div>
 
-                      <div class="d-grid gap-2 col-6 mx-auto">
+                      <div className="d-flex gap-2 mt-4">
                         <button className="btn btn-secondary" type="button"
                         onClick={() => removeFromCart(product.product._id)}>
                           Remove from Cart
@@ -75,7 +76,11 @@ const Cart = () => {
           <p>Delivery Charges: <strong>FREE</strong></p>
           <hr />
           <h5>Total Amount: ₹{totalPrice}</h5>
+          <Link to="/address">
+          <button className="btn btn-dark col-6 my-4" type="button" >Place Order</button>
+          </Link>
           </div>
+          
         </div>
       </section>
     </>

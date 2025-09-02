@@ -25,7 +25,7 @@ const ProductListing = () => {
   // if (productError) return <p>Something went wrong!</p>;
   
 
-  if (categoryLoading) return <p>Loading Categories...</p>;
+  if (categoryLoading) return <p className=" container fs-4 m-4">Loading Categories...</p>;
   if (categoryError) return <p>Failed to load categories!</p>;
   if (!categoryData) return null
   
