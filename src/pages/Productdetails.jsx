@@ -40,7 +40,7 @@ const ProductDetails = () => {
             alt={product.title} style={{ maxHeight: "400px", objectFit: "contain" }} />
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
-          <button className="btn btn-primary" type="button">Buy Now</button>
+          <Link to="/address"><button className="btn btn-primary" type="button">Buy Now</button></Link>
           <button className="btn btn-info" type="button" onClick={() => addToCart(product)}  >Add to Cart</button>
         </div>
       </div>
