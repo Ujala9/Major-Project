@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import ElectroContext from "../Context/ElectroContext";
 import useFetch from "../Components/useFetch";
+import { Link } from "react-router-dom";
 
 const ProductDetails = () => {
   const { wishlistHandler, wishlist,addToCart } =
