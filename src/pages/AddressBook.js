@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-const navigate = useNavigate();
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 const AddressPage = () => {
   const [addresses, setAddresses] = useState([]);
@@ -12,6 +13,8 @@ const AddressPage = () => {
     city: "",
   });
   const [editIndex, setEditIndex] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null); // NEW
+  const navigate = useNavigate();
 
   // Handle input change
   const handleChange = (e) => {
@@ -53,6 +56,7 @@ const AddressPage = () => {
     const updated = addresses.filter((_, i) => i !== index);
     setAddresses(updated);
     localStorage.setItem("addressList", JSON.stringify(updated));
+    if (selectedAddress === index) setSelectedAddress(null); // Reset selection if deleted
   };
 
   // Load stored addresses
@@ -71,12 +75,11 @@ const AddressPage = () => {
     navigate("/order-summary");
   };
 
-
   return (
     <div className="container mt-4">
       <h2>{editIndex !== null ? "Edit Address" : "Add New Address"}</h2>
 
-      {/* One Form for All Inputs */}
+      {/* Address Form */}
       <form onSubmit={handleSubmit} className="row">
         <div className="col-md-6">
           <h5 className="text-info">Contact Information</h5>
@@ -157,18 +160,35 @@ const AddressPage = () => {
         </div>
       </form>
 
+      {/* Saved Addresses */}
       <h4 className="mt-4">Saved Addresses</h4>
       <div className="row">
         {addresses.map((addr, index) => (
-          <div key={index} className="col-md-5 mx-4 card my-3">
+          <div
+            key={index}
+            className={`col-md-5 mx-4 card my-3 ${
+              selectedAddress === index ? "border border-primary" : ""
+            }`}
+          >
             <div className="card-body">
-              <h5 className="card-title">{addr.name}</h5>
-              <h6 className="card-subtitle mb-2 text-body-secondary">
-                {addr.phone}
-              </h6>
-              <p className="card-text">
-                {addr.street}, {addr.city}, {addr.state}, {addr.country}
-              </p>
+              <div className="form-check">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name="selectedAddress"
+                  checked={selectedAddress === index}
+                  onChange={() => setSelectedAddress(index)}
+                />
+                <label className="form-check-label">
+                  <h5 className="card-title">{addr.name}</h5>
+                  <h6 className="card-subtitle mb-2 text-body-secondary">
+                    {addr.phone}
+                  </h6>
+                  <p className="card-text">
+                    {addr.street}, {addr.city}, {addr.state}, {addr.country}
+                  </p>
+                </label>
+              </div>
               <button
                 className="btn btn-sm btn-link"
                 onClick={() => handleEdit(index)}
@@ -185,10 +205,17 @@ const AddressPage = () => {
           </div>
         ))}
       </div>
+
       {addresses.length > 0 && (
-        <button className="btn btn-success mt-3" onClick={handleCheckout}>
+        <Link to="/order">
+        <button
+          className="btn btn-success my-3"
+          onClick={handleCheckout}
+          disabled={selectedAddress === null}
+        >
           Proceed to Checkout
         </button>
+        </Link>
       )}
     </div>
   );

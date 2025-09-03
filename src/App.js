@@ -16,6 +16,7 @@ import UserRegisterForm from "./pages/newUser";
 import UserInfo from "./pages/userINfo";
 import AddressPage from "./pages/AddressBook";
 import WishlistManagement from "./pages/wishlist";
+import OrderSummary from "./pages/createSummary"
 
 import { ToastContainer,toast } from "react-toastify";
 
@@ -30,6 +31,8 @@ export default function App() {
     const savedWishlist = localStorage.getItem("wishlist");
     return savedWishlist ? JSON.parse(savedWishlist) : [];
   });
+
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   const [cartId, setCartId] = useState(() => {
     let id = localStorage.getItem("cartId");
@@ -181,6 +184,7 @@ export default function App() {
       value={{
         addToCart,
         cart,
+        setCart,
         removeFromCart,
         wishlistHandler,
         removeFromWishlist,
@@ -189,7 +193,9 @@ export default function App() {
         wishlist,
         ProductData,
         query,setQuery,
-        moveToWishlist
+        moveToWishlist,
+        selectedAddress,
+        setSelectedAddress
       }}
     >
       <BrowserRouter>
@@ -204,7 +210,8 @@ export default function App() {
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/address" element={<AddressPage/>} />
           <Route path="/wishlist" element={<WishlistManagement />} />
-
+          <Route path="/order" element={<OrderSummary />} />
+           
         </Routes>
           <ToastContainer theme="dark" autoClose={2000}/>
       </BrowserRouter>
