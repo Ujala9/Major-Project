@@ -213,6 +213,7 @@ export default function App() {
           <Route path="/order" element={<OrderSummary />} />
            
         </Routes>
+        
           <ToastContainer theme="dark" autoClose={2000}/>
       </BrowserRouter>
     </ElectroContext.Provider>

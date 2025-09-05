@@ -95,9 +95,9 @@ const ProductListing = () => {
     <>
       <div className="row">
         <div className="col-md-3 my-3">
-          <div className="container">
+          <div className="container mx-3">
             <div className="d-flex justify-content-between align-items-center">
-              <h4>Filters</h4>
+              <h4 className="mb-3">Filters</h4>
               <button
                 className="btn btn-outline-info btn-sm"
                 onClick={clearBtnHandler}

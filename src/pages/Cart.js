@@ -61,16 +61,16 @@ const Cart = () => {
                           </button>
                         </div>
 
-                        <div className="d-flex gap-2 mt-4">
+                        <div className="d-flex gap-2 mt-4 ">
                           <button
-                            className="btn btn-secondary"
+                            className="btn btn-secondary text-light"
                             type="button"
                             onClick={() => removeFromCart(product.product._id)}
                           >
                             Remove from Cart
                           </button>
                           <button
-                            className="btn btn-info"
+                            className="btn btn-info text-light"
                             type="button"
                             onClick={() => moveToWishlist(product)}
                           >

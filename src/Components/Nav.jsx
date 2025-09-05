@@ -13,13 +13,13 @@ const Nav = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-info-subtle shadow-sm py-3">
-      <div className="container">
-        {/* Brand */}
-        <NavLink className="navbar-brand text-primary fs-2 fw-bold me-4" to="/">
+      <div className="container-fluid">
+        
+        <NavLink className="navbar-brand text-primary fs-2 fw-bold px-2" to="/">
           ElectroShop
         </NavLink>
 
-        {/* Toggle button (mobile) */}
+    
         <button
           className="navbar-toggler"
           type="button"
@@ -34,8 +34,9 @@ const Nav = () => {
 
         {/* Nav Links */}
         <div className="collapse navbar-collapse" id="navbarText">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item mx-2">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
+
+            <li className="nav-item">
               <NavLink
                 className="nav-link active fw-medium fs-5 text-dark"
                 aria-current="page"
@@ -44,7 +45,7 @@ const Nav = () => {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item mx-2">
+            <li className="nav-item">
               <NavLink
                 className="nav-link fw-medium fs-5 text-dark"
                 to="/products"
@@ -52,7 +53,7 @@ const Nav = () => {
                 Products
               </NavLink>
             </li>
-            <li className="nav-item mx-2">
+            <li className="nav-item">
               <NavLink className="nav-link fw-medium fs-5 text-dark" to="/profile">
                 Login
               </NavLink>
@@ -66,13 +67,14 @@ const Nav = () => {
               placeholder="Search products..."
               onChange={handleSearch}
               className="form-control rounded-pill px-3"
-              style={{ minWidth: "220px" }}
+               style={{ minWidth: "220px" }}
             />
           </div>
 
-          {/* Cart, Profile, Wishlist */}
-          <div className="d-flex align-items-center">
-            {/* Cart */}
+        
+          <div className="d-flex align-items-center flex-wrap justify-content-center gap-2 mt-2 mt-lg-0">
+
+          
             <Link to="/cart" className="position-relative mx-3">
               <i className="bi bi-cart fs-3 text-dark"></i>
               {cart.length > 0 && (
