@@ -167,12 +167,14 @@ const ProductListing = () => {
                     ></i>
 
                     <Link to={`/products/${product._id}`}>
+                    <div className="d-flex justify-content-center align-items-center" style={{ height: "250px" }}>
                       <img
                         src={product.image}
-                        className="card-img-top"
+                        className="card-img-top img-fluid"
                         alt="..."
-                         style={{ width: "282px", height: "250px" }}
+                         style={{ objectFit: "contain", maxHeight: "250px" }}
                       />
+                      </div>
                     </Link>
 
                     <div className="card-body">
