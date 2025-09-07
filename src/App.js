@@ -78,6 +78,21 @@ export default function App() {
     });
   };
 
+  useEffect(() => {
+  if (ProductData && wishlist.length > 0) {
+    // Keep only valid IDs
+    const validIds = wishlist.filter((id) =>
+      ProductData.some((product) => product._id === id)
+    );
+
+    if (validIds.length !== wishlist.length) {
+      setWishlist(validIds);
+      localStorage.setItem("wishlist", JSON.stringify(validIds));
+    }
+  }
+}, [ProductData, wishlist]);
+
+
   //Remove from Whishlist
  
 

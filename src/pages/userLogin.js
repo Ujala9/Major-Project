@@ -24,7 +24,7 @@ const UserLogin = () => {
             aria-describedby="passwordHelpBlock"
           />
 
-          {/* Forgot Password Link */}
+          
           <Link to="/" className="d-block my-3 text-decoration-none">
             Forgot Your Password?
           </Link>
@@ -37,14 +37,14 @@ const UserLogin = () => {
             >
               SIGN IN
             </button>
-            <Link to="/register">
-              <button
-                class="btn btn-info"
+            <Link to="/register"
+              
+                className="btn btn-info"
                 type="button"
                 style={{ borderRadius: "0" }}
               >
                 CREATE AN ACCOUNT
-              </button>
+              
             </Link>
           </div>
         </form>

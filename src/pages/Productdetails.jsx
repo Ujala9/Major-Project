@@ -22,17 +22,17 @@ const ProductDetails = () => {
 
   return (
     <div className="row m-4">
-      {/* Left: Product Image + Buttons */}
+      
       <div className="col-12 col-md-6 my-3">
         <div className="position-relative">
           <i
-            className={`bi ${wishlist.includes(product.id)
+            className={`bi ${wishlist.includes(product._id)
               ? "bi-suit-heart-fill"
               : "bi-suit-heart"
               } fs-3 text-info position-absolute top-0 end-0`}
             role="button"
             title="Add to Wishlist"
-            onClick={() => wishlistHandler(product.id)}
+            onClick={() => wishlistHandler(product._id)}
           ></i>
           <img
             className="container my-4 img-fluid"
